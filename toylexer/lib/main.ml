@@ -24,4 +24,15 @@ let string_of_frequencies fl =
   List.fold_left (fun s (t,n) -> s ^ ((string_of_token t) ^ " -> " ^ string_of_int n ^ "\n")) "" fl
 
 (* frequency : int -> 'a list -> ('a * int) list *)
-let frequency _ _ = failwith("TODO")
+
+let frequency _ lst =
+  let rec count x lst = match lst with
+    | [] -> 0
+    | y::ys -> (if x = y then 1 else 0) + count x ys
+  in
+  let rec unique lst = match lst with
+    | [] -> []
+    | x::xs -> if List.mem x xs then unique xs else x::(unique xs)
+  in
+  let unique_lst = unique lst in
+  List.map (fun x -> (x, count x lst)) unique_lst
