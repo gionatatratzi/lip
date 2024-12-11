@@ -24,7 +24,7 @@ let symbol_of_char = function
   | _ -> None
 
 let string_of_sentform = function
-  | [] -> "ϵ"
+  | [] -> ""
   | s ->
       s
       |> List.filter_map (function
@@ -45,32 +45,3 @@ let sentform_of_string (s : string) =
     s []
 
 let ( --> ) sym sent : production = (sym, sentform_of_string sent)
-
-type symbol = A | B | S
-
-type terminal = char
-
-type symbol_or_terminal = Symbol of symbol | Terminal of terminal
-
-type sentential_form = symbol_or_terminal list
-
-type production = symbol * sentential_form
-
-type grammar = {
-  symbols : symbol list;
-  terminals : terminal list;
-  productions : production list;
-  start : symbol;
-}
-
-let todo : grammar = {
-    symbols = [ S ];
-    terminals = [ '0'; '1' ];
-    productions =
-      [
-        S --> "0S0";
-        S --> "1S1";
-        S --> "";
-      ];
-    start = S;
-  }
